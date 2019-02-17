@@ -23,6 +23,10 @@ const engine = userChoice => {
     case 'user:rock | comp:scissors':
     case 'user:scissors | comp:paper':
       console.log('user wins');
+    case 'user:rock | comp:paper':
+    case 'user:scissors | comp:rock':
+    case 'user:paper | comp:scissors':
+      console.log('comp wins');
   }
 };
 
