@@ -15,10 +15,21 @@ const getComputerRandomChoice = () => {
   return choices[randomChoiceIndex];
 };
 
+const engine = userChoice => {
+  const computerChoice = getComputerRandomChoice();
+  const choiceComposite = `user:${userChoice} | comp:${computerChoice}`;
+  switch (choiceComposite) {
+    case 'user:paper | comp:rock':
+    case 'user:rock | comp:scissors':
+    case 'user:scissors | comp:paper':
+      console.log('user wins');
+  }
+};
+
 const main = () => {
-  ROCK_CHOICE_DIV.addEventListener('click', () => console.log('rock'));
-  PAPER_CHOICE_DIV.addEventListener('click', () => console.log('paper'));
-  SCISSORS_CHOICE_DIV.addEventListener('click', () => console.log('scissors'));
+  ROCK_CHOICE_DIV.addEventListener('click', () => engine('rock'));
+  PAPER_CHOICE_DIV.addEventListener('click', () => engine('paper'));
+  SCISSORS_CHOICE_DIV.addEventListener('click', () => engine('scissors'));
 };
 
 main();
