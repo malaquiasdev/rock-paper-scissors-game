@@ -15,6 +15,49 @@ const getComputerRandomChoice = () => {
   return choices[randomChoiceIndex];
 };
 
+const convertCase = anythingIwant => {
+  if (anythingIwant === 'paper') return 'Paper';
+  if (anythingIwant === 'scissors') return 'Scissors';
+  return 'Rock';
+};
+
+const win = (user, computer) => {
+  userScore++;
+  USER_SCORE_SPAN.innerHTML = userScore;
+  const userName = ' (user)'.fontsize(3).sup();
+  const compName = ' (comp)'.fontsize(3).sup();
+  RESULT_DIV.innerHTML = `<p>${convertCase(
+    user,
+  )}${userName} beats ${convertCase(computer)}${compName}. You win!</p>`;
+  const roundStatus = document.getElementById(user);
+  roundStatus.classList.add('winningStyles');
+  setTimeout(() => roundStatus.classList.remove('winningStyles'), 300);
+};
+
+const loses = (user, computer) => {
+  computerScore++;
+  COMPUTER_SCORE_SPAN.innerHTML = computerScore;
+  const userName = ' (user)'.fontsize(3).sup();
+  const compName = ' (comp)'.fontsize(3).sup();
+  RESULT_DIV.innerHTML = `<p>${convertCase(
+    computer,
+  )}${compName} beats ${convertCase(user)}${userName}. You lose!</p>`;
+  const roundStatus = document.getElementById(user);
+  roundStatus.classList.add('losingStyles');
+  setTimeout(() => roundStatus.classList.remove('losingStyles'), 300);
+};
+
+const draw = (user, computer) => {
+  const userName = ' (user)'.fontsize(3).sup();
+  const compName = ' (comp)'.fontsize(3).sup();
+  RESULT_DIV.innerHTML = `<p>It was a draw! You both chose ${convertCase(
+    user,
+  )}</p>`;
+  const roundStatus = document.getElementById(user);
+  roundStatus.classList.add('drawStyles');
+  setTimeout(() => roundStatus.classList.remove('drawStyles'), 300);
+};
+
 const engine = userChoice => {
   const computerChoice = getComputerRandomChoice();
   const choiceComposite = `user:${userChoice} | comp:${computerChoice}`;
@@ -22,17 +65,17 @@ const engine = userChoice => {
     case 'user:paper | comp:rock':
     case 'user:rock | comp:scissors':
     case 'user:scissors | comp:paper':
-      console.log('user wins');
+      win(userChoice, computerChoice);
       break;
     case 'user:rock | comp:paper':
     case 'user:scissors | comp:rock':
     case 'user:paper | comp:scissors':
-      console.log('comp wins');
+      loses(userChoice, computerChoice);
       break;
     case 'user:rock | comp:rock':
     case 'user:paper | comp:paper':
     case 'user:scissors | comp:scissors':
-      console.log('ist a draw');
+      draw(userChoice, computerChoice);
       break;
   }
 };
